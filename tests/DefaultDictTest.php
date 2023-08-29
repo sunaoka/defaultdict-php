@@ -69,7 +69,7 @@ class DefaultDictTest extends TestCase
     {
         $dd = new DefaultDict(new DefaultDict(''));
 
-        self::assertNull($dd['x']['y']);
+        self::assertSame('', $dd['x']['y']);
 
         $dd['x']['y'] = 'string';
 
