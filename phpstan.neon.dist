@@ -1,0 +1,14 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+
+    level: 9
+
+    editorUrl: 'file://%%file%%:%%line%%'
+
+    editorUrlTitle: 'file://%%file%%:%%line%%'
+
+    paths:
+        - src/
+        - tests/
