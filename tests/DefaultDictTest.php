@@ -12,6 +12,7 @@ class DefaultDictTest extends TestCase
     {
         $dd = new DefaultDict(null);
 
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertNull($dd['x']);
     }
 
