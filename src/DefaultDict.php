@@ -60,22 +60,20 @@ class DefaultDict implements \ArrayAccess
     }
 
     /**
-     * @param TKey   $offset
+     * @param TKey|null $offset
      * @param TValue $value
-     *
-     * @return void
-     *
-     * @phpstan-param ?TKey $offset
      */
     public function offsetSet($offset, $value): void
     {
+        if ($offset === null) {
+            throw new \InvalidArgumentException('The offset must not be null.');
+        }
+
         $this->dictionary[$offset] = $value;
     }
 
     /**
      * @param TKey $offset
-     *
-     * @return void
      */
     public function offsetUnset($offset): void
     {
