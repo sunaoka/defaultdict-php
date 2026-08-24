@@ -55,15 +55,40 @@ class DefaultDictTest extends TestCase
         self::assertSame(1, $dd['y']);
     }
 
-    public function test_in_int_dict(): void
+    public function test_in_default_dict(): void
     {
         $dd = new DefaultDict(new DefaultDict(0));
 
-        self::assertSame(0, $dd['x']['y']);
+        $first = $dd['x'];
+        $second = $dd['y'];
 
-        $dd['x']['y']++;
+        self::assertInstanceOf(DefaultDict::class, $first);
+        self::assertInstanceOf(DefaultDict::class, $second);
 
-        self::assertSame(1, $dd['x']['y']);
+        $first['count'] = 1;
+
+        self::assertSame(1, $first['count']);
+        self::assertSame(1, $second['count']);
+        self::assertSame($first, $second);
+    }
+
+    public function test_in_callable_dict(): void
+    {
+        $dd = new DefaultDict(function () {
+            return new DefaultDict(0);
+        });
+
+        $first = $dd['x'];
+        $second = $dd['y'];
+
+        self::assertInstanceOf(DefaultDict::class, $first);
+        self::assertInstanceOf(DefaultDict::class, $second);
+
+        $first['count'] = 1;
+
+        self::assertSame(1, $first['count']);
+        self::assertSame(0, $second['count']);
+        self::assertNotSame($first, $second);
     }
 
     public function test_in_string_dict(): void
@@ -95,6 +120,15 @@ class DefaultDictTest extends TestCase
         $dd['x'] = 1;
 
         self::assertSame(1, $dd['x']);
+    }
+
+    public function test_set_without_offset(): void
+    {
+        $dd = new DefaultDict(0);
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $dd[] = 1;
     }
 
     public function test_to_array(): void
