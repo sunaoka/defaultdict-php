@@ -1,7 +1,7 @@
 # defaultdict-php
  
-[![License](https://img.shields.io/github/license/sunaoka/defaultdict-php.svg?style=flat)](https://github.com/sunaoka/defaultdict-php/blob/main/LICENSE)  
-[![PHP Version](https://img.shields.io/packagist/php-v/sunaoka/defaultdict-php.svg?style=flat)](https://packagist.org/packages/sunaoka/defaultdict-php)  
+[![License](https://img.shields.io/github/license/sunaoka/defaultdict-php.svg?style=flat)](https://github.com/sunaoka/defaultdict-php/blob/main/LICENSE) 
+[![PHP Version](https://img.shields.io/packagist/php-v/sunaoka/defaultdict-php.svg?style=flat)](https://packagist.org/packages/sunaoka/defaultdict-php)
 [![Test](https://github.com/sunaoka/defaultdict-php/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/sunaoka/defaultdict-php/actions/workflows/test.yml)
 [![Code Coverage](https://codecov.io/gh/sunaoka/defaultdict-php/branch/main/graph/badge.svg)](https://codecov.io/gh/sunaoka/defaultdict-php)
 
