@@ -6,7 +6,8 @@
 [![Code Coverage](https://codecov.io/gh/sunaoka/defaultdict-php/branch/main/graph/badge.svg)](https://codecov.io/gh/sunaoka/defaultdict-php)
 
 A simple **default dictionary** implementation in PHP, inspired by Python’s `collections.defaultdict`.  
-Automatically initializes missing keys using a user-provided factory function.
+Automatically initializes missing keys with a default value or a user-provided
+callable. Callables receive the missing key as their only argument.
 
 ---
 
@@ -55,9 +56,13 @@ $strings = new DefaultDict('');
 echo $strings['name']; // ''
 ```
 
+Unlike Python's `defaultdict`, `null` is stored and returned as a default value;
+it does not raise an exception for a missing key.
+
 ### Callable Factories
 
 Pass a callable to create a default value from the undefined key.
+Unlike Python's `default_factory`, the callable receives the missing key.
 
 ```php
 $dict = new DefaultDict(function ($key) {
@@ -70,22 +75,34 @@ echo $dict['secondary']; // 1
 
 ### Nested Dictionaries
 
-Use another `DefaultDict` as the default value to access nested keys.
+Pass a `DefaultDict` directly to share the same nested dictionary across missing
+keys.
 
 ```php
-$numbers = new DefaultDict(new DefaultDict(0));
-$numbers['x']['y']++;
-echo $numbers['x']['y']; // 1
+$shared = new DefaultDict(new DefaultDict(0));
+$shared['x']['count'] = 1;
+echo $shared['y']['count']; // 1
+```
 
-$strings = new DefaultDict(new DefaultDict(''));
-$strings['x']['y'] = 'value';
-echo $strings['x']['y']; // value
+Pass a callable to create an independent nested dictionary for each missing key.
+
+```php
+$independent = new DefaultDict(function ($key) {
+    return new DefaultDict(0);
+});
+$independent['x']['count'] = 1;
+echo $independent['y']['count']; // 0
 ```
 
 ### Array Access
 
 `DefaultDict` implements `ArrayAccess`. Assign values with array syntax and use
 `toArray()` to retrieve keys that have been accessed or explicitly assigned.
+Every assignment requires an explicit key; `$dict[] = $value` throws an
+`InvalidArgumentException`.
+This library is inspired by Python's `collections.defaultdict`, but is not a
+drop-in replacement for Python's `dict`. It does not provide methods such as
+`get()`, `pop()`, or `setdefault()`, nor dictionary iteration or counting.
 
 ```php
 $dict = new DefaultDict(0);
